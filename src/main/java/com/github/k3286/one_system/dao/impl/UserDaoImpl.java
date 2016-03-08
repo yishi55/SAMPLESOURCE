@@ -44,7 +44,9 @@ public class UserDaoImpl implements UserDao {
         EntityManager em = fac.createEntityManager();
         try {
             em.getTransaction().begin();
-            // TODO 追加処理
+
+            em.persist(user);
+
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {

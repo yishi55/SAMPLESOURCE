@@ -4,23 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.ws.rs.FormParam;
 
 @Entity
 public class User {
 
     @Id
-    @FormParam("id")
     private String id;
-    @FormParam("name")
     private String name;
-    @FormParam("birthName")
     private String birthName;
-
     private Date birthDay;
-    @FormParam("email")
     private String email;
-    @FormParam("image")
     private String image;
 
     public String getId() {
@@ -28,7 +21,6 @@ public class User {
     }
 
     public void setId(String id) {
-        System.out.println("setId invoked.");
         this.id = id;
     }
 
