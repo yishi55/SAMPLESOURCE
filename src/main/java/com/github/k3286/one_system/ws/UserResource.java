@@ -35,7 +35,6 @@ public class UserResource {
     @JSONP
     @Consumes({ MediaType.APPLICATION_JSON })
     public User getById(@PathParam("id") String id) {
-        System.out.println("getById: " + id);
         if (id != null && !id.isEmpty()) {
             return userDao.getById(id);
         } else {

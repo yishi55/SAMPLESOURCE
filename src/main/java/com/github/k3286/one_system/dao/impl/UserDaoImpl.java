@@ -19,14 +19,7 @@ public class UserDaoImpl implements UserDao {
     public User getById(String id) {
         EntityManagerFactory fac = Persistence.createEntityManagerFactory("brycen");
         EntityManager em = fac.createEntityManager();
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteria = builder.createQuery(User.class);
-        EntityType<User> type = em.getMetamodel().entity(User.class);
-        Root<User> root = criteria.from(User.class);
-        criteria.where(//
-                builder.equal(root.get(//
-                        type.getDeclaredSingularAttribute("id", String.class)), id));
-        return em.createQuery(criteria).getSingleResult();
+        return em.find(User.class, id);
     }
 
     @Override
@@ -60,11 +53,10 @@ public class UserDaoImpl implements UserDao {
             // ないことを確認
             if (getById(user.getId()) == null) {
                 em.persist(user);
+                em.getTransaction().commit();
             }
         } catch (Exception e) {
             em.getTransaction().rollback();
-        } finally {
-            em.getTransaction().commit();
         }
     }
 
@@ -74,14 +66,12 @@ public class UserDaoImpl implements UserDao {
         EntityManager em = fac.createEntityManager();
         try {
             em.getTransaction().begin();
-            // あることを確認
             if (getById(user.getId()) != null) {
-                em.persist(user);
+                em.merge(user);
+                em.getTransaction().commit();
             }
         } catch (Exception e) {
             em.getTransaction().rollback();
-        } finally {
-            em.getTransaction().commit();
         }
     }
 
@@ -91,13 +81,13 @@ public class UserDaoImpl implements UserDao {
         EntityManager em = fac.createEntityManager();
         try {
             em.getTransaction().begin();
-            User user = new User();
-            user.setId(id);
-            em.remove(user);
+            User user = getById(id);
+            if (user != null) {
+                em.remove(em.merge(user));
+                em.getTransaction().commit();
+            }
         } catch (Exception e) {
             em.getTransaction().rollback();
-        } finally {
-            em.getTransaction().commit();
         }
     }
 
