@@ -60,11 +60,8 @@ public class UserResource {
     @JSONP
     @Consumes({ MediaType.APPLICATION_JSON })
     public void updateById(@PathParam("id") String id, User user) {
-
-        System.out.println("updateById: " + user);
         if (id != null && !id.isEmpty()) {
-            // TODO Userインスタンスの作成
-            userDao.update(new User());
+            userDao.update(user);
         } else {
         }
     }
@@ -87,7 +84,6 @@ public class UserResource {
         System.out.println("deleteById: " + id);
         if (id != null && !id.isEmpty()) {
             userDao.delete(id);
-        } else {
         }
     }
 }
