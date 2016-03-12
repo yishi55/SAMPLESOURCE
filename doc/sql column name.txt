@@ -1,0 +1,27 @@
+■user			user
+ID					id						pk
+名前				name
+メールアドレス		mail
+自己PR				pr
+備考				remarks
+
+
+■得意分野		specialty
+親ID				parentId				pk
+得意分野			text					pk
+
+
+■職歴			career
+親ID				parentId				pk
+開始日				from
+終了日				to
+業務内容			content
+使用スキル			skill
+規模・担当			tanto
+
+
+■資格			requirements
+親ID				parentId				pk
+資格取得日			get
+資格名称			name
+
